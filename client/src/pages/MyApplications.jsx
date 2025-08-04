@@ -7,10 +7,6 @@ const MyApplications = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    fetchAppliedJobs();
-  }, [fetchAppliedJobs]);
-
   const fetchAppliedJobs = useCallback(async () => {
     setLoading(true);
     setError("");
@@ -19,12 +15,17 @@ const MyApplications = () => {
         headers: { Authorization: `Bearer ${token}` },
       });
       setAppliedJobs(res.data);
-    } catch {
+    } catch (err) {
+      console.error("MyApplications: Error fetching applied jobs:", err);
       setError("Failed to fetch your applied jobs");
     } finally {
       setLoading(false);
     }
   }, [token]);
+
+  useEffect(() => {
+    fetchAppliedJobs();
+  }, [fetchAppliedJobs]);
 
   return (
     <div className="max-w-5xl mx-auto p-6">
