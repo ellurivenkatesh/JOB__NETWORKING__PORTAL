@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "../api/axios";
 
 const MyApplications = () => {
@@ -9,9 +9,9 @@ const MyApplications = () => {
 
   useEffect(() => {
     fetchAppliedJobs();
-  }, []);
+  }, [fetchAppliedJobs]);
 
-  const fetchAppliedJobs = async () => {
+  const fetchAppliedJobs = useCallback(async () => {
     setLoading(true);
     setError("");
     try {
@@ -24,7 +24,7 @@ const MyApplications = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [token]);
 
   return (
     <div className="max-w-5xl mx-auto p-6">

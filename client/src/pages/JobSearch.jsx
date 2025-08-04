@@ -10,7 +10,7 @@ const JobSearch = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [userProfile, setUserProfile] = useState(null);
-  const [showSkillMatcher, setShowSkillMatcher] = useState(false);
+  // const [showSkillMatcher, setShowSkillMatcher] = useState(false);
 
   const [filters, setFilters] = useState({
     title: "",

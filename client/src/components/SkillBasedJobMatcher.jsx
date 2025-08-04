@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 const SkillBasedJobMatcher = ({ userSkills, availableJobs, onMatchedJobs }) => {
   const [matchedJobs, setMatchedJobs] = useState([]);
@@ -40,7 +40,7 @@ const SkillBasedJobMatcher = ({ userSkills, availableJobs, onMatchedJobs }) => {
   };
 
   // Match jobs with user skills
-  const matchJobsWithSkills = () => {
+  const matchJobsWithSkills = useCallback(() => {
     if (!userSkills || !availableJobs || availableJobs.length === 0) {
       setMatchedJobs([]);
       return;
@@ -105,7 +105,7 @@ const SkillBasedJobMatcher = ({ userSkills, availableJobs, onMatchedJobs }) => {
     setMatchedJobs(relevantJobs);
     onMatchedJobs(relevantJobs);
     setLoading(false);
-  };
+  }, [userSkills, availableJobs, onMatchedJobs]);
 
   // Extract skills from text using keyword matching
   const extractSkillsFromText = (text) => {
@@ -164,7 +164,7 @@ const SkillBasedJobMatcher = ({ userSkills, availableJobs, onMatchedJobs }) => {
 
   useEffect(() => {
     matchJobsWithSkills();
-  }, [userSkills, availableJobs]);
+  }, [userSkills, availableJobs, matchJobsWithSkills]);
 
   const getMatchColor = (score) => {
     if (score >= 80) return 'text-green-600 bg-green-100';
