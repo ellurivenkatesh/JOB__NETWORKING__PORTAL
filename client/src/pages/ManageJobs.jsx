@@ -111,7 +111,6 @@ const ManageJobs = () => {
         responseType: 'blob'
       });
       
-      // Create a blob URL and trigger download
       const blob = new Blob([response.data], { type: 'application/pdf' });
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement('a');
@@ -253,7 +252,6 @@ const ManageJobs = () => {
               </>
             )}
 
-            {/* Applicants List */}
             {showApplicantsFor === job._id && (
               <div className="mt-4 border-t pt-4">
                 <h4 className="font-semibold mb-2">Applicants ({applicants.length})</h4>

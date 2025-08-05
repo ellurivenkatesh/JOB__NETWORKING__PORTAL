@@ -4,12 +4,10 @@ import { Link, useNavigate } from "react-router-dom";
 const Navbar = ({ isAuthenticated }) => {
   const navigate = useNavigate();
 
-  // Safely parse user from localStorage
   let user = null;
   try {
     user = JSON.parse(localStorage.getItem("user"));
   } catch (error) {
-    // Invalid JSON, ignore and keep user null
   }
 
   const handleLogout = () => {
@@ -29,7 +27,7 @@ const Navbar = ({ isAuthenticated }) => {
       <div className="space-x-4 flex items-center">
         {isAuthenticated && user ? (
           <>
-            {/* Common Links */}
+            
             <Link to="/posts" className="hover:underline">
               Posts
             </Link>
@@ -37,7 +35,7 @@ const Navbar = ({ isAuthenticated }) => {
               Profile
             </Link>
 
-            {/* Role-based Links */}
+            
             {user.role === "recruiter" && (
               <>
                 <Link to="/jobs/manage" className="hover:underline">

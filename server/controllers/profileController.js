@@ -1,6 +1,5 @@
 const User = require("../models/User");
 
-// 1. Get Own Profile
 exports.getMyProfile = async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select("-password");
@@ -11,7 +10,6 @@ exports.getMyProfile = async (req, res) => {
   }
 };
 
-// 2. Update Own Profile
 exports.updateMyProfile = async (req, res) => {
   try {
     const updates = req.body;
@@ -29,7 +27,6 @@ exports.updateMyProfile = async (req, res) => {
   }
 };
 
-// 3. Get Public Profile by ID
 exports.getUserProfileById = async (req, res) => {
   try {
     const user = await User.findById(req.params.id).select("-password");

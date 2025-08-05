@@ -10,7 +10,6 @@ const JobSearch = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [userProfile, setUserProfile] = useState(null);
-  // const [showSkillMatcher, setShowSkillMatcher] = useState(false);
 
   const [filters, setFilters] = useState({
     title: "",
@@ -20,7 +19,6 @@ const JobSearch = () => {
     maxBudget: "",
   });
 
-  // Fetch user profile to get skills
   const fetchUserProfile = useCallback(async () => {
     try {
       const res = await axios.get("/user/me", {
@@ -32,11 +30,9 @@ const JobSearch = () => {
     }
   }, [token]);
 
-  // Memoized filter function
   const applyFilters = useCallback(() => {
     let filtered = [...jobs];
 
-    // Exclude applied jobs
     filtered = filtered.filter((job) => !appliedJobs.includes(job._id));
 
     if (filters.title.trim()) {
@@ -78,7 +74,6 @@ const JobSearch = () => {
     setFilteredJobs(filtered);
   }, [jobs, appliedJobs, filters]);
 
-  // Fetch applied jobs
   const fetchAppliedJobs = useCallback(async () => {
     try {
       const res = await axios.get("/jobs/user/applied", {
@@ -86,13 +81,12 @@ const JobSearch = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      setAppliedJobs(res.data.map((job) => job._id)); // Assuming res.data is an array of job objects
+      setAppliedJobs(res.data.map((job) => job._id)); 
     } catch (err) {
       console.error("Failed to fetch applied jobs", err);
     }
   }, [token]);
 
-  // Fetch all jobs
   const fetchJobs = useCallback(async () => {
     setLoading(true);
     setError("");
@@ -129,14 +123,12 @@ const JobSearch = () => {
   };
 
   const handleMatchedJobs = (matchedJobs) => {
-    // Update filtered jobs with skill-matched jobs at the top
     const matchedJobIds = matchedJobs.map(job => job._id);
     const otherJobs = filteredJobs.filter(job => !matchedJobIds.includes(job._id));
     const prioritizedJobs = [...matchedJobs, ...otherJobs];
     setFilteredJobs(prioritizedJobs);
   };
 
-  // Convert user skills array to comma-separated string
   const getUserSkillsString = () => {
     if (!userProfile?.skills || userProfile.skills.length === 0) return "";
     return userProfile.skills.join(", ");
@@ -146,7 +138,6 @@ const JobSearch = () => {
     <div className="max-w-5xl mx-auto p-6">
       <h1 className="text-3xl font-bold mb-6">Find Jobs</h1>
 
-      {/* Skill-Based Job Matcher */}
       {userProfile?.skills && userProfile.skills.length > 0 ? (
         <div className="mb-6">
           <SkillBasedJobMatcher
@@ -290,8 +281,8 @@ const ApplyButton = ({ jobId, onApply }) => {
       
       if (response.status === 200) {
         setApplied(true);
-        onApply(); // Notify parent to update UI
-        setError(""); // Clear any previous errors
+        onApply(); 
+        setError(""); 
       }
     } catch (err) {
       console.error("Application error:", err);

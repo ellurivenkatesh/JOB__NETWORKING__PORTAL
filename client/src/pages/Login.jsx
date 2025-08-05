@@ -24,10 +24,9 @@ function Login() {
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res.data.user));
 
-      // Optional: Broadcast login to other tabs
       window.dispatchEvent(new Event("storage"));
 
-      navigate("/posts"); // or redirect based on role if needed
+      navigate("/posts"); 
     } catch (err) {
       setError(err.response?.data?.message || "Login failed");
     } finally {

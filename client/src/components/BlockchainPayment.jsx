@@ -9,7 +9,6 @@ const BlockchainPayment = ({ onPaymentSuccess, onPaymentError }) => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
-  // Get configuration values
   const ADMIN_WALLET = BLOCKCHAIN_CONFIG.ADMIN_WALLET;
   const PAYMENT_AMOUNT = BLOCKCHAIN_CONFIG.PAYMENT_AMOUNT;
 
@@ -20,7 +19,6 @@ const BlockchainPayment = ({ onPaymentSuccess, onPaymentError }) => {
         return;
       }
 
-      // Switch to the correct network first
       await switchToNetwork(BLOCKCHAIN_CONFIG.DEFAULT_NETWORK);
 
       const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -35,7 +33,6 @@ const BlockchainPayment = ({ onPaymentSuccess, onPaymentError }) => {
     } catch (err) {
       console.error('Wallet connection error:', err);
       
-      // Provide specific instructions for network issues
       if (err.message.includes('Failed to add')) {
         setError(`Network connection failed. Please manually add ${BLOCKCHAIN_CONFIG.NETWORKS[BLOCKCHAIN_CONFIG.DEFAULT_NETWORK].chainName} to MetaMask:
         1. Open MetaMask
@@ -63,22 +60,18 @@ const BlockchainPayment = ({ onPaymentSuccess, onPaymentError }) => {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
       
-      // Convert amount to wei
       const amountInWei = ethers.utils.parseEther(PAYMENT_AMOUNT);
       
-      // Create transaction
       const tx = {
         to: ADMIN_WALLET,
         value: amountInWei,
         gasLimit: 21000
       };
 
-      // Send transaction
       const transaction = await signer.sendTransaction(tx);
       
       setSuccess('Payment transaction sent! Waiting for confirmation...');
       
-      // Wait for transaction confirmation
       const receipt = await transaction.wait();
       
       if (receipt.status === 1) {
@@ -98,7 +91,6 @@ const BlockchainPayment = ({ onPaymentSuccess, onPaymentError }) => {
   };
 
   useEffect(() => {
-    // Check if wallet is already connected
     if (window.ethereum) {
       window.ethereum.request({ method: 'eth_accounts' })
         .then(accounts => {

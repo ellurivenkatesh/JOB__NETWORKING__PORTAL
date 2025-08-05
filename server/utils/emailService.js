@@ -1,23 +1,19 @@
 const nodemailer = require('nodemailer');
 require('dotenv').config();
 
-// Create transporter for Gmail
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: process.env.EMAIL_USER, // Your Gmail address
-    pass: process.env.EMAIL_PASS  // Your Gmail app password
+    user: process.env.EMAIL_USER, 
+    pass: process.env.EMAIL_PASS  
   }
 });
 
-// Generate 6-digit OTP
 const generateOTP = () => {
   return Math.floor(100000 + Math.random() * 900000).toString();
 };
 
-// Send OTP email
 const sendOTPEmail = async (email, otp) => {
-  // Check if email configuration is set up
   if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
     console.error('Email configuration missing. Please set EMAIL_USER and EMAIL_PASS in .env file');
     return false;

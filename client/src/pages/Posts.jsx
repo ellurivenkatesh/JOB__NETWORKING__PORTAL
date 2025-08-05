@@ -13,7 +13,6 @@ function Posts() {
   const token = localStorage.getItem("token");
   const user = JSON.parse(localStorage.getItem("user"));
 
-  // Fetch posts on mount
   useEffect(() => {
     const fetchPosts = async () => {
       try {
@@ -33,7 +32,6 @@ function Posts() {
     fetchPosts();
   }, [token]);
 
-  // Handle image preview on select
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -45,7 +43,6 @@ function Posts() {
     }
   };
 
-  // Create a new post
   const handlePost = async (e) => {
     e.preventDefault();
     setError("");
@@ -66,7 +63,6 @@ function Posts() {
           "Content-Type": "multipart/form-data",
         },
       });
-      // Backend sends updated post object directly
       setPosts([res.data, ...posts]);
       setContent("");
       setImage(null);
@@ -79,7 +75,6 @@ function Posts() {
     }
   };
 
-  // Toggle like/unlike
   const toggleLike = async (post) => {
     try {
       const isLiked = post.likes.some((id) => id.toString() === user._id);
@@ -102,7 +97,6 @@ function Posts() {
     }
   };
 
-  // Add comment
   const addComment = async (postId, comment) => {
     if (!comment.trim()) return;
     try {
@@ -120,7 +114,6 @@ function Posts() {
     }
   };
 
-  // Delete comment
   const deleteComment = async (postId, commentId) => {
     try {
       const res = await axios.delete(
@@ -144,7 +137,6 @@ function Posts() {
         <div className="mb-4 p-2 bg-red-100 text-red-700 rounded">{error}</div>
       )}
 
-      {/* Post Form */}
       <form onSubmit={handlePost} className="mb-6">
         <textarea
           className="w-full p-3 border rounded mb-2"
@@ -175,7 +167,6 @@ function Posts() {
         </button>
       </form>
 
-      {/* Display Posts */}
       {posts.map((post) => (
         <div key={post._id} className="border p-4 rounded mb-6 shadow">
           <p className="mb-2">{post.content}</p>
@@ -205,7 +196,6 @@ function Posts() {
               : "Unknown date"}
           </p>
 
-          {/* Like Button */}
           <button
             onClick={() => toggleLike(post)}
             className={`text-sm px-3 py-1 rounded ${
@@ -217,7 +207,6 @@ function Posts() {
             ❤️ {post.likes.length}
           </button>
 
-          {/* Comments */}
           <div className="mt-4 space-y-1">
             <strong>Comments:</strong>
             {post.comments.map((c) => (

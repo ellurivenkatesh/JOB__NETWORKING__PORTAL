@@ -1,16 +1,10 @@
-// Blockchain Configuration
 export const BLOCKCHAIN_CONFIG = {
-  // Admin wallet address to receive payments (REPLACE WITH YOUR ACTUAL ADDRESS)
-  // Get your address from MetaMask: Open MetaMask → Click account name → Copy address
-  ADMIN_WALLET: '0x75986CDd4e251a0aADE08ea9A921EE9BA59C0585', // REPLACE THIS WITH YOUR ADDRESS
-  
-  // Payment amount in ETH/MATIC
+  ADMIN_WALLET: '0x75986CDd4e251a0aADE08ea9A921EE9BA59C0585', 
   PAYMENT_AMOUNT: '0.000',
   
-  // Network configuration
   NETWORKS: {
     ETHEREUM_SEPOLIA: {
-      chainId: '0xaa36a7', // 11155111 in decimal
+      chainId: '0xaa36a7', 
       chainName: 'Ethereum Sepolia Testnet',
       nativeCurrency: {
         name: 'Ethereum',
@@ -22,11 +16,9 @@ export const BLOCKCHAIN_CONFIG = {
     }
   },
   
-  // Default network to use
-  DEFAULT_NETWORK: 'ETHEREUM_SEPOLIA' // Using Sepolia testnet for testing
+  DEFAULT_NETWORK: 'ETHEREUM_SEPOLIA' 
 };
 
-// Helper function to switch network
 export const switchToNetwork = async (networkKey) => {
   if (!window.ethereum) {
     throw new Error('MetaMask is not installed');
@@ -38,16 +30,13 @@ export const switchToNetwork = async (networkKey) => {
   }
 
   try {
-    // First try to switch to the network
     await window.ethereum.request({
       method: 'wallet_switchEthereumChain',
       params: [{ chainId: network.chainId }],
     });
   } catch (switchError) {
-    // This error code indicates that the chain has not been added to MetaMask
     if (switchError.code === 4902) {
       try {
-        // Add the network to MetaMask
         await window.ethereum.request({
           method: 'wallet_addEthereumChain',
           params: [{

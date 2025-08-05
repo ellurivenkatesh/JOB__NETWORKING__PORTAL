@@ -3,7 +3,6 @@ const router = express.Router();
 const auth = require("../middleware/authMiddleware");
 const multer = require("multer");
 
-// Setup multer for image uploads
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "uploads/");
@@ -27,7 +26,6 @@ const {
   deleteComment,
 } = require("../controllers/postController");
 
-// Routes
 router.post("/", auth, upload.single("image"), createPost);
 router.get("/", getAllPosts);
 router.put("/:id", auth, updatePost);
@@ -36,7 +34,6 @@ router.put("/:id/like", auth, likePost);
 router.put("/:id/unlike", auth, unlikePost);
 router.post("/:id/comment", auth, commentPost);
 
-// Important: order matters — user posts route before get post by id
 router.get("/user/:userId", auth, getPostsByUser);
 router.get("/:id", auth, getPostById);
 

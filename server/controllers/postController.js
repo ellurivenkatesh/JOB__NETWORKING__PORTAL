@@ -1,10 +1,9 @@
 const Post = require("../models/Post");
 
-// Create a new post
 exports.createPost = async (req, res) => {
   try {
     const { content } = req.body;
-    const image = req.file ? req.file.path : null; // multer stores file info in req.file
+    const image = req.file ? req.file.path : null; 
 
     if (!content) return res.status(400).json({ msg: "Content is required" });
 
@@ -26,7 +25,6 @@ exports.createPost = async (req, res) => {
   }
 };
 
-// Get all posts
 exports.getAllPosts = async (req, res) => {
   try {
     const posts = await Post.find()
@@ -40,7 +38,6 @@ exports.getAllPosts = async (req, res) => {
   }
 };
 
-// Like a post
 exports.likePost = async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
@@ -63,7 +60,6 @@ exports.likePost = async (req, res) => {
   }
 };
 
-// Unlike a post
 exports.unlikePost = async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
@@ -84,7 +80,6 @@ exports.unlikePost = async (req, res) => {
   }
 };
 
-// Add a comment
 exports.commentPost = async (req, res) => {
   try {
     const { comment } = req.body;
@@ -113,7 +108,6 @@ exports.commentPost = async (req, res) => {
   }
 };
 
-// Delete a comment
 exports.deleteComment = async (req, res) => {
   try {
     const { id: postId, commentId } = req.params;
@@ -144,7 +138,6 @@ exports.deleteComment = async (req, res) => {
   }
 };
 
-// Update a post
 exports.updatePost = async (req, res) => {
   try {
     const { id } = req.params;
@@ -170,7 +163,6 @@ exports.updatePost = async (req, res) => {
   }
 };
 
-// Delete a post
 exports.deletePost = async (req, res) => {
   try {
     const { id } = req.params;
@@ -187,7 +179,6 @@ exports.deletePost = async (req, res) => {
   }
 };
 
-// Get post by ID
 exports.getPostById = async (req, res) => {
   try {
     const post = await Post.findById(req.params.id)
@@ -202,7 +193,6 @@ exports.getPostById = async (req, res) => {
   }
 };
 
-// Get posts by user
 exports.getPostsByUser = async (req, res) => {
   try {
     const posts = await Post.find({ author: req.params.userId })

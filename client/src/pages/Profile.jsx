@@ -72,7 +72,7 @@ function Profile() {
     const res = await axios.put("/user/me", dataToSend, {
       headers: { Authorization: `Bearer ${token}` },
     });
-    setProfile(res.data.user);  // <--- fix here
+    setProfile(res.data.user);  
     setEditMode(false);
     alert("Profile updated successfully.");
   } catch (err) {
@@ -104,7 +104,6 @@ function Profile() {
     setPostSavingIds((prev) => new Set(prev).add(postId));
     try {
       const updated = editedPosts[postId];
-      // Trim inputs before sending
       const dataToSend = {
         title: updated.title.trim(),
         content: updated.content.trim(),

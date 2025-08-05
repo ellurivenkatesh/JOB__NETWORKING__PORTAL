@@ -3,9 +3,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Custom CSS for Professional Job Networking Portal */
 
-/* Global Styles */
 * {
   box-sizing: border-box;
 }
@@ -17,7 +15,6 @@ body {
   color: #1f2937;
 }
 
-/* Special Login Page Background */
 .login-page {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   min-height: 100vh;
@@ -45,9 +42,7 @@ body {
   66% { transform: translateY(10px) rotate(-1deg); }
 }
 
-/* Custom Component Classes */
 @layer components {
-  /* Professional Card Styles */
   .card {
     @apply bg-white rounded-xl shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300;
   }
@@ -56,7 +51,6 @@ body {
     @apply transform hover:scale-105 transition-transform duration-200;
   }
 
-  /* Professional Button Styles - Fixed Color Dominance */
   .btn-primary {
     @apply bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-blue-800 transform hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl;
   }
@@ -77,7 +71,6 @@ body {
     @apply border-2 border-blue-600 text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-blue-600 hover:text-white transition-all duration-200;
   }
 
-  /* Fixed Action Buttons - Better Contrast */
   .btn-edit {
     @apply bg-gradient-to-r from-yellow-500 to-yellow-600 text-white px-4 py-2 rounded-lg font-medium hover:from-yellow-600 hover:to-yellow-700 transform hover:scale-105 transition-all duration-200 shadow-md hover:shadow-lg;
   }
@@ -94,7 +87,6 @@ body {
     @apply bg-gradient-to-r from-emerald-500 to-emerald-600 text-white px-4 py-2 rounded-lg font-medium hover:from-emerald-600 hover:to-emerald-700 transform hover:scale-105 transition-all duration-200 shadow-md hover:shadow-lg;
   }
 
-  /* Professional Input Styles */
   .input-field {
     @apply w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white shadow-sm;
   }
@@ -103,7 +95,6 @@ body {
     @apply outline-none transform scale-105;
   }
 
-  /* Professional Form Styles */
   .form-container {
     @apply max-w-md mx-auto bg-white rounded-2xl shadow-2xl p-8 border border-gray-100 relative z-10;
   }
@@ -116,7 +107,6 @@ body {
     @apply text-gray-600 text-center mb-6;
   }
 
-  /* Professional Navigation */
   .nav-link {
     @apply text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200 px-4 py-2 rounded-lg hover:bg-blue-50;
   }
@@ -125,7 +115,6 @@ body {
     @apply text-blue-600 bg-blue-50 font-semibold;
   }
 
-  /* Professional Job Card */
   .job-card {
     @apply bg-white rounded-xl shadow-lg border border-gray-100 p-6 hover:shadow-xl transition-all duration-300 transform hover:scale-105;
   }
@@ -146,7 +135,6 @@ body {
     @apply text-sm text-gray-600 bg-gray-100 px-2 py-1 rounded-full;
   }
 
-  /* Professional Dashboard */
   .dashboard-card {
     @apply bg-white rounded-xl shadow-lg p-6 border border-gray-100;
   }
@@ -159,7 +147,6 @@ body {
     @apply text-gray-600 font-medium;
   }
 
-  /* Professional Profile */
   .profile-section {
     @apply bg-white rounded-xl shadow-lg p-6 mb-6 border border-gray-100;
   }
@@ -168,7 +155,6 @@ body {
     @apply w-24 h-24 rounded-full border-4 border-blue-200 shadow-lg;
   }
 
-  /* Professional Applicant Card */
   .applicant-card {
     @apply bg-white rounded-lg shadow-md p-4 border border-gray-200 hover:shadow-lg transition-all duration-200;
   }
@@ -181,12 +167,10 @@ body {
     @apply text-gray-600 text-sm;
   }
 
-  /* Professional Loading States */
   .loading-spinner {
     @apply animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600;
   }
 
-  /* Professional Alerts */
   .alert-success {
     @apply bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg;
   }
@@ -199,7 +183,6 @@ body {
     @apply bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded-lg;
   }
 
-  /* Professional Modal */
   .modal-overlay {
     @apply fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50;
   }
@@ -208,7 +191,6 @@ body {
     @apply bg-white rounded-xl shadow-2xl p-6 max-w-md w-full mx-4;
   }
 
-  /* Professional File Upload */
   .file-upload {
     @apply border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-blue-400 transition-colors duration-200;
   }
@@ -217,7 +199,6 @@ body {
     @apply bg-blue-50;
   }
 
-  /* Professional Search */
   .search-container {
     @apply relative;
   }
@@ -230,7 +211,6 @@ body {
     @apply absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400;
   }
 
-  /* Professional Filters */
   .filter-container {
     @apply bg-white rounded-lg shadow-md p-4 mb-6;
   }
@@ -239,7 +219,6 @@ body {
     @apply px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent;
   }
 
-  /* Professional Pagination */
   .pagination {
     @apply flex justify-center space-x-2 mt-6;
   }
@@ -252,7 +231,6 @@ body {
     @apply bg-blue-600 text-white border-blue-600;
   }
 
-  /* Professional Footer */
   .footer {
     @apply bg-gray-800 text-white py-8 mt-16;
   }
@@ -261,12 +239,10 @@ body {
     @apply max-w-6xl mx-auto px-6;
   }
 
-  /* Professional Responsive Design */
   .container-responsive {
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
   }
 
-  /* Professional Animations */
   .fade-in {
     animation: fadeIn 0.5s ease-in-out;
   }
@@ -279,7 +255,6 @@ body {
     animation: bounceIn 0.6s ease-out;
   }
 
-  /* Professional Action Button Group */
   .action-buttons {
     @apply flex space-x-3 flex-wrap gap-2;
   }
@@ -288,7 +263,6 @@ body {
     @apply px-4 py-2 rounded-lg font-medium transition-all duration-200 transform hover:scale-105 shadow-md hover:shadow-lg;
   }
 
-  /* Professional Status Badges */
   .status-badge {
     @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium;
   }
@@ -306,7 +280,6 @@ body {
   }
 }
 
-/* Custom Animations */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -344,7 +317,6 @@ body {
   }
 }
 
-/* Professional Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -363,19 +335,16 @@ body {
   background: #a8a8a8;
 }
 
-/* Professional Focus States */
 *:focus {
   outline: 2px solid #3b82f6;
   outline-offset: 2px;
 }
 
-/* Professional Selection */
 ::selection {
   background: #3b82f6;
   color: white;
 }
 
-/* Professional Print Styles */
 @media print {
   .no-print {
     display: none !important;
@@ -386,7 +355,6 @@ body {
   }
 }
 
-/* Professional Dark Mode Support */
 @media (prefers-color-scheme: dark) {
   .dark-mode {
     @apply bg-gray-900 text-white;
@@ -401,7 +369,6 @@ body {
   }
 }
 
-/* Professional Mobile Optimizations */
 @media (max-width: 768px) {
   .mobile-hidden {
     display: none;
@@ -416,7 +383,6 @@ body {
   }
 }
 
-/* Professional Accessibility */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -429,7 +395,6 @@ body {
   border: 0;
 }
 
-/* Professional Loading States */
 .skeleton {
   @apply animate-pulse bg-gray-200 rounded;
 }
@@ -442,7 +407,6 @@ body {
   @apply w-12 h-12 bg-gray-200 rounded-full;
 }
 
-/* Professional Tooltips */
 .tooltip {
   @apply relative;
 }
@@ -458,7 +422,6 @@ body {
   @apply visible opacity-100;
 }
 
-/* Professional Status Indicators */
 .status-online {
   @apply w-3 h-3 bg-green-500 rounded-full;
 }
@@ -471,7 +434,6 @@ body {
   @apply w-3 h-3 bg-red-500 rounded-full;
 }
 
-/* Professional Progress Bars */
 .progress-bar {
   @apply w-full bg-gray-200 rounded-full h-2;
 }
@@ -480,7 +442,6 @@ body {
   @apply bg-blue-600 h-2 rounded-full transition-all duration-300;
 }
 
-/* Professional Badges */
 .badge {
   @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
 }
@@ -501,7 +462,6 @@ body {
   @apply bg-red-100 text-red-800;
 }
 
-/* Professional Tables */
 .table-container {
   @apply overflow-x-auto shadow-md rounded-lg;
 }
@@ -530,7 +490,6 @@ body {
   @apply px-6 py-4 whitespace-nowrap text-sm text-gray-900;
 }
 
-/* Professional Sidebar */
 .sidebar {
   @apply fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out;
 }
@@ -543,7 +502,6 @@ body {
   @apply -translate-x-full;
 }
 
-/* Professional Header */
 .header {
   @apply bg-white shadow-sm border-b border-gray-200 sticky top-0 z-40;
 }
@@ -552,7 +510,6 @@ body {
   @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
 }
 
-/* Professional Layout */
 .main-layout {
   @apply min-h-screen bg-gray-50;
 }
@@ -561,17 +518,14 @@ body {
   @apply flex-1 p-6;
 }
 
-/* Professional Grid */
 .grid-responsive {
   @apply grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4;
 }
 
-/* Professional Spacing */
 .space-y-responsive > * + * {
   @apply mt-4 sm:mt-6 lg:mt-8;
 }
 
-/* Professional Typography */
 .text-gradient {
   @apply bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent;
 }
@@ -580,7 +534,6 @@ body {
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Professional Icons */
 .icon {
   @apply inline-flex items-center justify-center;
 }
@@ -597,7 +550,6 @@ body {
   @apply w-8 h-8;
 }
 
-/* Professional Dividers */
 .divider {
   @apply border-t border-gray-200 my-6;
 }
@@ -606,7 +558,6 @@ body {
   @apply border-t border-dashed border-gray-300 my-6;
 }
 
-/* Professional Lists */
 .list-styled {
   @apply space-y-2;
 }
@@ -620,17 +571,14 @@ body {
   @apply text-blue-600 font-bold mr-2 mt-0.5;
 }
 
-/* Professional Code Blocks */
 .code-block {
   @apply bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-sm overflow-x-auto;
 }
 
-/* Professional Quotes */
 .quote {
   @apply border-l-4 border-blue-500 pl-4 italic text-gray-700;
 }
 
-/* Professional Callouts */
 .callout {
   @apply p-4 rounded-lg border-l-4;
 }

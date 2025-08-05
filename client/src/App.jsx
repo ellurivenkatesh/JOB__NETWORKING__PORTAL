@@ -9,23 +9,20 @@ import Navbar from "./components/Navbar";
 import Posts from "./pages/Posts";
 import ManageJobs from "./pages/ManageJobs";
 import JobPost from "./pages/JobPost";
-import JobSearch from "./pages/JobSearch"; // Seeker job search page
-import MyApplications from "./pages/MyApplications"; // Seeker applied jobs page
+import JobSearch from "./pages/JobSearch"; 
+import MyApplications from "./pages/MyApplications"; 
 
-// Generic protected route
 const ProtectedRoute = ({ isAuthenticated, children }) => {
   if (!isAuthenticated) return <Navigate to="/login" replace />;
   return children;
 };
 
-// Recruiter-only route
 const RecruiterRoute = ({ isAuthenticated, user, children }) => {
   if (!isAuthenticated) return <Navigate to="/login" replace />;
   if (user?.role !== "recruiter") return <Navigate to="/posts" replace />;
   return children;
 };
 
-// Seeker-only route
 const SeekerRoute = ({ isAuthenticated, user, children }) => {
   if (!isAuthenticated) return <Navigate to="/login" replace />;
   if (user?.role !== "seeker") return <Navigate to="/posts" replace />;
@@ -51,8 +48,8 @@ function App() {
         setUser(null);
       }
     };
-    syncAuth(); // Run once on load
-    window.addEventListener("storage", syncAuth); // Sync across tabs
+    syncAuth(); 
+    window.addEventListener("storage", syncAuth); 
     return () => window.removeEventListener("storage", syncAuth);
   }, []);
 
@@ -60,7 +57,6 @@ function App() {
     <Router>
       <Navbar isAuthenticated={isAuthenticated} />
       <Routes>
-        {/* Redirect root */}
         <Route
           path="/"
           element={
@@ -68,7 +64,6 @@ function App() {
           }
         />
 
-        {/* Public Routes */}
         <Route
           path="/login"
           element={
@@ -80,7 +75,6 @@ function App() {
         />
         <Route path="/register" element={<Register />} />
 
-        {/* Common Protected Routes */}
         <Route
           path="/posts"
           element={
@@ -106,7 +100,6 @@ function App() {
           }
         />
 
-        {/* Recruiter Routes */}
         <Route
           path="/jobs/manage"
           element={
@@ -124,7 +117,6 @@ function App() {
           }
         />
 
-        {/* Seeker Routes */}
         <Route
           path="/jobs"
           element={

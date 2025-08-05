@@ -1,7 +1,6 @@
 const Job = require("../models/Job");
 const User = require("../models/User");
 
-// 1. Create a Job
 exports.createJob = async (req, res) => {
   try {
     const { title, description, skills, budget, location, endDate, company } = req.body;
@@ -24,7 +23,6 @@ exports.createJob = async (req, res) => {
   }
 };
 
-// 2. Get All Jobs
 exports.getAllJobs = async (req, res) => {
   try {
     const jobs = await Job.find().populate("creator", "name email");
@@ -34,7 +32,6 @@ exports.getAllJobs = async (req, res) => {
   }
 };
 
-// 2.5. Get Job by ID
 exports.getJobById = async (req, res) => {
   try {
     const job = await Job.findById(req.params.id).populate("creator", "name email");
@@ -47,7 +44,6 @@ exports.getJobById = async (req, res) => {
   }
 };
 
-// 3. Edit Job
 exports.updateJob = async (req, res) => {
   try {
     const job = await Job.findById(req.params.id);
@@ -65,7 +61,6 @@ exports.updateJob = async (req, res) => {
   }
 };
 
-// 4. Delete Job
 exports.deleteJob = async (req, res) => {
   try {
     const job = await Job.findById(req.params.id);
@@ -81,7 +76,6 @@ exports.deleteJob = async (req, res) => {
   }
 };
 
-// 5. Apply to Job (with or without resume)
 exports.applyToJob = async (req, res) => {
   try {
     const jobId = req.params.jobId || req.params.id;
@@ -101,11 +95,9 @@ exports.applyToJob = async (req, res) => {
 
     const alreadyApplied = job.applicants.some(applicant => {
       if (!applicant) return false;
-      // If applicant is an object with a user field
       if (typeof applicant === 'object' && applicant.user) {
         return applicant.user.toString() === userId;
       }
-      // If applicant is a string or ObjectId
       if (typeof applicant === 'string' || typeof applicant === 'object') {
         return applicant.toString() === userId;
       }
@@ -134,7 +126,6 @@ exports.applyToJob = async (req, res) => {
   }
 };
 
-// 6. Withdraw Application
 exports.withdrawApplication = async (req, res) => {
   try {
     const job = await Job.findById(req.params.id);
@@ -151,7 +142,6 @@ exports.withdrawApplication = async (req, res) => {
   }
 };
 
-// 7. Get Jobs Created by a Recruiter
 exports.getJobsByRecruiter = async (req, res) => {
   try {
     const jobs = await Job.find({ creator: req.user.id });
@@ -167,8 +157,8 @@ exports.getJobsAppliedByUser = async (req, res) => {
     console.log('Fetching jobs applied by user:', userId);
     const jobs = await Job.find({
       $or: [
-        { applicants: userId },                  // case: user ID directly in array
-        { "applicants.user": userId }            // case: object format with resume
+        { applicants: userId },                  
+        { "applicants.user": userId }            
       ]
     }).populate("creator", "name email");
     console.log('Jobs found:', jobs.map(j => ({id: j._id, title: j.title, applicants: j.applicants})));
@@ -178,7 +168,6 @@ exports.getJobsAppliedByUser = async (req, res) => {
   }
 };
 
-// 9. Get Applicants for a Job
 exports.getJobApplicants = async (req, res) => {
   try {
     const job = await Job.findById(req.params.id);
@@ -188,26 +177,21 @@ exports.getJobApplicants = async (req, res) => {
     if (job.creator.toString() !== req.user.id)
       return res.status(403).json({ message: "Unauthorized" });
 
-    // Process applicants to get user details and resume info
     const processedApplicants = [];
     
     for (const applicant of job.applicants) {
       let userId, resumePath;
       
       if (applicant && typeof applicant === 'object' && applicant.user) {
-        // Object format with resume
         userId = applicant.user;
         resumePath = applicant.resume;
       } else if (applicant) {
-        // Direct ObjectId format
         userId = applicant;
         resumePath = null;
       } else {
-        // Skip null/undefined entries
         continue;
       }
 
-      // Get user details
       const user = await User.findById(userId).select('name email role');
       if (user) {
         processedApplicants.push({
@@ -225,7 +209,6 @@ exports.getJobApplicants = async (req, res) => {
   }
 };
 
-// 10. Download Resume
 exports.downloadResume = async (req, res) => {
   try {
     const { jobId, applicantId } = req.params;
@@ -236,7 +219,6 @@ exports.downloadResume = async (req, res) => {
     if (job.creator.toString() !== req.user.id)
       return res.status(403).json({ message: "Unauthorized" });
 
-    // Find the applicant with resume
     const applicant = job.applicants.find(app => {
       if (app && typeof app === 'object' && app.user) {
         return app.user.toString() === applicantId;
@@ -248,7 +230,6 @@ exports.downloadResume = async (req, res) => {
       return res.status(404).json({ message: "Resume not found" });
     }
 
-    // Send the resume file
     const resumePath = applicant.resume;
     res.download(resumePath, `resume-${applicantId}.pdf`);
   } catch (err) {

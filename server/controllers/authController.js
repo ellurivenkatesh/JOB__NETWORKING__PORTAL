@@ -7,24 +7,19 @@ require("dotenv").config();
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
-// Send OTP for registration
 exports.sendOTP = async (req, res) => {
   const { email } = req.body;
 
   try {
-    // Check if user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: "User with this email already exists" });
     }
 
-    // Generate OTP
     const otp = generateOTP();
     
-    // Store OTP
     storeOTP(email, otp);
     
-    // Send OTP email
     const emailSent = await sendOTPEmail(email, otp);
     
     if (emailSent) {
@@ -38,18 +33,15 @@ exports.sendOTP = async (req, res) => {
   }
 };
 
-// Verify OTP and register user
 exports.verifyOTPAndRegister = async (req, res) => {
   const { name, email, password, role, otp } = req.body;
 
   try {
-    // Check if user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: "User with this email already exists" });
     }
 
-    // Verify OTP
     const storedOTP = getOTP(email);
     if (!storedOTP) {
       return res.status(400).json({ message: "OTP expired or not found" });
@@ -59,10 +51,8 @@ exports.verifyOTPAndRegister = async (req, res) => {
       return res.status(400).json({ message: "Invalid OTP" });
     }
 
-    // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create user
     const user = new User({
       name,
       email,
@@ -72,7 +62,6 @@ exports.verifyOTPAndRegister = async (req, res) => {
 
     await user.save();
     
-    // Remove OTP after successful registration
     removeOTP(email);
     
     res.status(201).json({ message: "User registered successfully" });
@@ -82,7 +71,6 @@ exports.verifyOTPAndRegister = async (req, res) => {
   }
 };
 
-// Original register function (kept for backward compatibility)
 exports.register = async (req, res) => {
   const { name, email, password, walletAddress, role } = req.body;
 
@@ -119,7 +107,6 @@ exports.login = async (req, res) => {
 
     const token = jwt.sign({ id: user._id, role: user.role }, JWT_SECRET, { expiresIn: "1d" });
 
-    // Do not send password in response
     const { password: _, ...userData } = user.toObject();
 
     res.json({ token, user: userData });

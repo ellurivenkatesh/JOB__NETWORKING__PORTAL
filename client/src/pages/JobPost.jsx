@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "../api/axios"; // your axios instance with baseURL set
+import axios from "../api/axios"; 
 import BlockchainPayment from "../components/BlockchainPayment";
 
 const JobPost = () => {
@@ -71,7 +71,7 @@ const JobPost = () => {
           location: formData.location,
           endDate: formData.endDate ? new Date(formData.endDate) : null,
           company: formData.company,
-          transactionHash: transactionHash, // Include transaction hash in job data
+          transactionHash: transactionHash, 
         },
         {
           headers: {
@@ -108,7 +108,6 @@ const JobPost = () => {
       {error && <div className="mb-4 text-red-600">{error}</div>}
       {success && <div className="mb-4 text-green-600">{success}</div>}
 
-      {/* Blockchain Payment Section */}
       {!paymentCompleted && (
         <div className="mb-6">
           <BlockchainPayment 

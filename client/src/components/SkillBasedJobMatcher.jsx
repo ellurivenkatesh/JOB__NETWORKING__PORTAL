@@ -4,7 +4,6 @@ const SkillBasedJobMatcher = ({ userSkills, availableJobs, onMatchedJobs }) => {
   const [matchedJobs, setMatchedJobs] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  // Parse skills string into array
   const parseSkills = (skillsString) => {
     if (!skillsString) return [];
     return skillsString
@@ -13,7 +12,6 @@ const SkillBasedJobMatcher = ({ userSkills, availableJobs, onMatchedJobs }) => {
       .filter(skill => skill.length > 0);
   };
 
-  // Calculate match score based on skill overlap
   const calculateSkillMatch = (userSkillsArray, jobSkillsArray) => {
     if (!userSkillsArray || userSkillsArray.length === 0) return 0;
     if (!jobSkillsArray || jobSkillsArray.length === 0) return 0;
@@ -21,11 +19,9 @@ const SkillBasedJobMatcher = ({ userSkills, availableJobs, onMatchedJobs }) => {
     const userSkillsLower = userSkillsArray.map(skill => skill.toLowerCase());
     const jobSkillsLower = jobSkillsArray.map(skill => skill.toLowerCase());
 
-    // Count matching skills
     let matchCount = 0;
     userSkillsLower.forEach(userSkill => {
       jobSkillsLower.forEach(jobSkill => {
-        // Check for exact match or partial match
         if (userSkill === jobSkill || 
             userSkill.includes(jobSkill) || 
             jobSkill.includes(userSkill)) {
@@ -34,12 +30,10 @@ const SkillBasedJobMatcher = ({ userSkills, availableJobs, onMatchedJobs }) => {
       });
     });
 
-    // Calculate percentage match
     const maxSkills = Math.max(userSkillsLower.length, jobSkillsLower.length);
     return maxSkills > 0 ? (matchCount / maxSkills) * 100 : 0;
   };
 
-  // Match jobs with user skills
   const matchJobsWithSkills = useCallback(() => {
     if (!userSkills || !availableJobs || availableJobs.length === 0) {
       setMatchedJobs([]);
@@ -48,38 +42,29 @@ const SkillBasedJobMatcher = ({ userSkills, availableJobs, onMatchedJobs }) => {
 
     setLoading(true);
 
-    // Parse user skills
     const userSkillsArray = parseSkills(userSkills);
 
-    // Calculate match scores for each job
     const jobsWithScores = availableJobs.map(job => {
-      // Extract skills from job (could be in description, skills field, or title)
       const jobSkills = [];
       
-      // Add skills from job.skills if available
       if (job.skills && Array.isArray(job.skills)) {
         jobSkills.push(...job.skills);
       }
       
-      // Add skills from job description
       if (job.description) {
         const descriptionSkills = extractSkillsFromText(job.description);
         jobSkills.push(...descriptionSkills);
       }
       
-      // Add skills from job title
       if (job.title) {
         const titleSkills = extractSkillsFromText(job.title);
         jobSkills.push(...titleSkills);
       }
 
-      // Remove duplicates
       const uniqueJobSkills = [...new Set(jobSkills)];
 
-      // Calculate match score
       const matchScore = calculateSkillMatch(userSkillsArray, uniqueJobSkills);
 
-      // Find matched skills
       const matchedSkills = userSkillsArray.filter(userSkill =>
         uniqueJobSkills.some(jobSkill =>
           userSkill === jobSkill.toLowerCase() ||
@@ -97,7 +82,6 @@ const SkillBasedJobMatcher = ({ userSkills, availableJobs, onMatchedJobs }) => {
       };
     });
 
-    // Sort by match score (highest first) and filter relevant matches
     const relevantJobs = jobsWithScores
       .filter(job => job.matchScore > 0)
       .sort((a, b) => b.matchScore - a.matchScore);
@@ -107,44 +91,34 @@ const SkillBasedJobMatcher = ({ userSkills, availableJobs, onMatchedJobs }) => {
     setLoading(false);
   }, [userSkills, availableJobs, onMatchedJobs]);
 
-  // Extract skills from text using keyword matching
   const extractSkillsFromText = (text) => {
     if (!text) return [];
 
     const skillKeywords = [
-      // Programming Languages
+      //PLANGUAGES
       'javascript', 'js', 'python', 'java', 'c++', 'c#', 'php', 'ruby', 'go', 'rust',
       'swift', 'kotlin', 'typescript', 'ts', 'scala', 'r', 'matlab', 'perl', 'html', 'css',
-      
-      // Web Technologies
       'react', 'angular', 'vue', 'node.js', 'nodejs', 'express.js', 'expressjs', 'django', 
       'flask', 'laravel', 'spring', 'asp.net', 'aspnet', 'jquery', 'bootstrap', 'sass', 
       'less', 'webpack', 'babel', 'npm', 'yarn', 'next.js', 'nextjs', 'nuxt.js', 'nuxtjs',
-      
-      // Databases
+      // DB
       'mysql', 'postgresql', 'postgres', 'mongodb', 'sqlite', 'oracle', 'sql server', 
       'sqlserver', 'redis', 'elasticsearch', 'dynamodb', 'firebase', 'cassandra',
-      
-      // Cloud & DevOps
+      // Cloud
       'aws', 'amazon web services', 'azure', 'google cloud', 'gcp', 'docker', 'kubernetes', 
       'k8s', 'jenkins', 'git', 'github', 'gitlab', 'terraform', 'ansible', 'chef', 'puppet',
-      
-      // Data Science & AI
+      // AI
       'machine learning', 'ml', 'deep learning', 'dl', 'tensorflow', 'pytorch', 'scikit-learn', 
       'scikitlearn', 'pandas', 'numpy', 'matplotlib', 'seaborn', 'jupyter', 'spark', 'hadoop',
-      
-      // Mobile Development
+      //Development
       'react native', 'reactnative', 'flutter', 'xamarin', 'ionic', 'cordova', 'android', 'ios',
-      
       // Soft Skills
       'leadership', 'communication', 'teamwork', 'problem solving', 'problemsolving', 'analytical',
       'project management', 'projectmanagement', 'agile', 'scrum', 'kanban', 'customer service',
-      
-      // Design & Creative
+      // A SKILLS
       'ui/ux', 'ui', 'ux', 'figma', 'adobe photoshop', 'photoshop', 'illustrator', 'sketch', 
       'invision', 'wireframing', 'prototyping', 'user research', 'design thinking',
-      
-      // Marketing & Business
+      // NON TECH
       'digital marketing', 'digitalmarketing', 'seo', 'sem', 'social media', 'socialmedia', 
       'content marketing', 'contentmarketing', 'email marketing', 'emailmarketing', 'analytics', 
       'google ads', 'googleads', 'facebook ads', 'facebookads'

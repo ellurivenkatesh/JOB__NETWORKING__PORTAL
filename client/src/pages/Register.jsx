@@ -4,12 +4,12 @@ import { useNavigate, Link } from "react-router-dom";
 
 function Register() {
   const navigate = useNavigate();
-  const [step, setStep] = useState(1); // 1: form, 2: OTP verification
+  const [step, setStep] = useState(1); 
   const [form, setForm] = useState({
     name: "",
     email: "",
     password: "",
-    role: "seeker", // default role
+    role: "seeker", 
   });
   const [otp, setOtp] = useState("");
   const [error, setError] = useState("");
@@ -26,7 +26,6 @@ function Register() {
     setError("");
     setOtpLoading(true);
 
-    // Basic validation
     if (!form.name.trim() || !form.email.trim() || !form.password.trim()) {
       setError("Please fill in all fields");
       setOtpLoading(false);
@@ -101,7 +100,6 @@ function Register() {
         )}
 
         {step === 1 ? (
-          // Step 1: Registration Form
           <form onSubmit={handleSendOTP} className="space-y-4">
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
@@ -183,7 +181,6 @@ function Register() {
             </button>
           </form>
         ) : (
-          // Step 2: OTP Verification
           <form onSubmit={handleVerifyOTP} className="space-y-4">
             <div className="text-center mb-4">
               <p className="text-gray-600 mb-2">
